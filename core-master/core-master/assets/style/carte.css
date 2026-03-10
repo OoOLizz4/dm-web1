@@ -1,0 +1,36 @@
+body {
+    display : grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 170px 1fr 50px;
+}
+
+#entete{
+    position:relative;
+    z-index : 7;
+
+    grid-column: 1;
+    grid-row: 1;
+
+    background-color: rgba(171, 241, 171, 0.705);
+    box-shadow: 3px 3px 10px black;
+    border-radius: 30px;
+
+    margin: 10px;
+    padding:10px;
+
+    text-align: center;
+    color: rgb(24, 75, 0);
+}
+
+#map { 
+    position : relative;
+    z-index : 1;
+
+    grid-column: 1 /span 2;
+    grid-row: 2;
+
+    height: 1000px; 
+    border-radius: 30px;
+
+    margin:10px;
+}
