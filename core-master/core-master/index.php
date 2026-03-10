@@ -19,7 +19,7 @@ Flight::route('/', function () {
     Flight::render('carte');
 });
 
-//route d'API ?
+//route d'API
 Flight::route('/rechercheLoca', function () {
     $link = Flight::get('link');
 
@@ -42,6 +42,27 @@ Flight::route('/rechercheLoca', function () {
     };
 
     Flight::json($donnees);
+});
+
+Flight::route('/affichageGeom', function () {
+    $link = Flight::get('link');
+
+    $insee = $_GET['insee'];
+
+    $ville = [];
+
+    $requete = mysqli_query (
+        $link,
+            "SELECT insee, ST_AsGeoJson(geometry) AS geom
+            FROM geobase.communes
+            WHERE insee = '" .$insee. "'"
+    );
+    
+    $ville = mysqli_fetch_assoc($requete);
+    $ville['geom'] = json_decode($ville['geom']);
+
+    ini_set('serialize_precision','-1');
+    Flight::json($ville['geom']);
 });
 
 Flight::route('/test', function (){

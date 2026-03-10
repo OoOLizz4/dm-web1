@@ -22,6 +22,21 @@ body {
     color: rgb(24, 75, 0);
 }
 
+#villes {
+    grid-column: 1 /span 2;
+    grid-row: 2;
+
+    padding: 0;
+    background: rgb(247, 233, 111);
+}
+#villes li {
+    padding: 10px;
+    list-style-type: none;
+}
+#villes li:hover {
+    background: white;
+}
+
 #map { 
     position : relative;
     z-index : 1;
