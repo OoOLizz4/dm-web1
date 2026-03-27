@@ -41,41 +41,80 @@ Vue.createApp({
         console.log(result2)
       })
     },
-
-    geometrie(insee){
+    
+    geometrie(ville){
       console.log("Geometrie a été lancée pour ")
-      console.log(insee)
+      console.log(ville.nom)
       
       this.listeProp = [];
       
-      this.urlInseeGeom = "http://localhost/affichageGeom?insee=" + insee
-
+      this.urlInseeGeom = "http://localhost/affichageGeom?insee=" + ville.insee
       
       fetch(this.urlInseeGeom)
       .then (res => res.json())
       .then((donnees) => {
         console.log(donnees)
-
+        
         if (this.currentLayer) {
           map.removeLayer(this.currentLayer);
         }
-  
+        
         if (this.currentMarker) {
           map.removeLayer(this.currentMarker);
         }
-
+        
         this.currentLayer = L.geoJSON(donnees).addTo(map);
-
+        
         let bounds = this.currentLayer.getBounds();
         map.fitBounds(bounds)
-
+        
         let center = bounds.getCenter();
-
+        
         this.currentMarker = L.marker(center).addTo(map)
-          .bindPopup(insee)
-          .openPopup();
+        .bindPopup(ville.nom)
+        .openPopup();
+      })
+    },
+  
+    boutonsspeciaux(filtre){
+      console.log("boutonspeciaux a été lancée pour ")
+      console.log(filtre)
+      
+      if (this.currentLayer) {
+        map.removeLayer(this.currentLayer);
+      }
+      
+      if (this.currentMarker) {
+        map.removeLayer(this.currentMarker);
+      }
+      
+      urlBSpeciaux = "http://localhost/boutonspeciaux?filtre=" + filtre
+      
+      fetch(urlBSpeciaux)
+      .then (res => res.json())
+      .then((donnees) => {
+        console.log(donnees)
+        for (let donnee of donnees) {
+          this.urlInseeGeom = "http://localhost/affichageGeom?insee=" + donnee.insee
+
+          fetch(this.urlInseeGeom)
+          .then (res => res.json())
+          .then((ville) => {
+            console.log(ville)
+
+            this.currentLayer = L.geoJSON(ville).addTo(map);
+            
+            let bounds = this.currentLayer.getBounds();
+            map.fitBounds(bounds)
+            
+            let center = bounds.getCenter();
+            
+            this.currentMarker = L.marker(center).addTo(map)
+            .bindPopup(donnee.nom)
+            .openPopup();
+          })
+        }
       })
     }
   }
-      
 }).mount('#app');

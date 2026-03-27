@@ -35,23 +35,23 @@
             
             <form>
                 <input 
-                type="text"
-                v-model="locaSaisie" 
-                @input = "autocomplete"
-                placeholder = "Expression à chercher"
+                    type="text"
+                    v-model="locaSaisie" 
+                    @input = "autocomplete"
+                    placeholder = "Expression à chercher"
                 >
             </form>
 
             <form action="/boutonspeciaux">
                 <p>Boutons de recherche prédéfinis : </p>
-                <button type="submit" name="filtre" value="sainte">Commence par Sainte</button>
-                <button type="submit" name="filtre" value="esse">Fini par esse</button>
+                <button @click.prevent = "boutonsspeciaux('sainte')" name="filtre" value="sainte">Commence par Sainte</button>
+                <button @click.prevent = "boutonsspeciaux('esse')" name="filtre" value="esse">Fini par esse</button>
             </form>
         </div>
 
 
         <ul id="villes" v-if = "listeProp.length"> 
-            <li v-for = "ville in listeProp" @click = "geometrie(ville.insee)"> {{ville.nom}}-{{ville.insee}} </li>                 
+            <li v-for = "ville in listeProp" @click = "geometrie(ville)"> {{ville.nom}}-{{ville.insee}} </li>                 
         </ul>
 
     </div>
