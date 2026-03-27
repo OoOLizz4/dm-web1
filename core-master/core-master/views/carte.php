@@ -16,24 +16,30 @@
 
     <div id="entete">
 
-        <h1>(ノ・∀・)ノ C'est parti pour la géogarphie ! 」(￣▽￣」) </h1>
+        <h1>(ノ・∀・)ノ Exploration de la France ! 」(￣▽￣」) </h1>
         <p>Cherche une ville que tu veux montrer sur la carte !</p>
-        <form @submit.prevent="submit">
+        
+        <form>
 
-            <select name="option">
+            <select name="methode" v-model="methode" @change="autocomplete">
                 <option value="commence"> commence par </option>
                 <option value="contient"> contient </option>
                 <option value="fini"> fini par </option>
             </select>
+
+        </form>
+        
+        <button> Commence par Saint </button> <button> Fini par esse </button>
+        
+        <form @submit.prevent="submit">
 
             <input 
                 type="text"
                 v-model="locaSaisie" 
                 @input = "autocomplete"
             >
-            <button>Go</button>
+
         </form>
-        <button> Commence par Saint </button> <button> Fini par esse </button>
 
         <ul id="villes" v-if = "listeProp.length"> 
             <li v-for = "ville in listeProp" @click = "geometrie(ville.insee)"> {{ville.nom}}-{{ville.insee}} </li>                 
