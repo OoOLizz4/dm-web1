@@ -15,7 +15,9 @@ Vue.createApp({
       locaSaisie : '',
       methode : '',
       listeProp : [],
-      urlInseeGeom : ''
+      urlInseeGeom : '',
+      currentLayer : null,
+      currentMarker : null
     };
   },
 
@@ -47,20 +49,31 @@ Vue.createApp({
       this.listeProp = [];
       
       this.urlInseeGeom = "http://localhost/affichageGeom?insee=" + insee
+
       
       fetch(this.urlInseeGeom)
       .then (res => res.json())
       .then((donnees) => {
         console.log(donnees)
 
-        let geomCommunes = L.geoJSON(donnees).addTo(map);
-        
-        let marker = L.marker(geomCommunes).addTo(map)
+        if (this.currentLayer) {
+          map.removeLayer(this.currentLayer);
+        }
+  
+        if (this.currentMarker) {
+          map.removeLayer(this.currentMarker);
+        }
+
+        this.currentLayer = L.geoJSON(donnees).addTo(map);
+
+        let bounds = this.currentLayer.getBounds();
+        map.fitBounds(bounds)
+
+        let center = bounds.getCenter();
+
+        this.currentMarker = L.marker(center).addTo(map)
           .bindPopup(insee)
           .openPopup();
-      
-        let bounds = geomCommunes.getBounds();
-        map.fitBounds(bounds)
       })
     }
   }

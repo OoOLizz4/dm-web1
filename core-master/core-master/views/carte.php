@@ -16,11 +16,11 @@
 
     <div id="entete">
 
-        <h1>(ノ・∀・)ノ Exploration de la France ! 」(￣▽￣」) </h1>
+        <h1>(ノ・∀・)ノ Explorons les villes de France ! 」(￣▽￣」) </h1>
         <p>Cherche une ville que tu veux montrer sur la carte !</p>
         
         <form>
-
+            <p>Choisis une méthode de recherche : </p>
             <select name="methode" v-model="methode" @change="autocomplete">
                 <option value="commence"> commence par </option>
                 <option value="contient"> contient </option>
@@ -28,17 +28,18 @@
             </select>
 
         </form>
-        
-        <button> Commence par Saint </button> <button> Fini par esse </button>
-        
-        <form @submit.prevent="submit">
 
+        <form action="/boutonspeciaux">
+            <button type="submit" name="filtre" value="sainte">Commence par Sainte</button>
+            <button type="submit" name="filtre" value="esse">Fini par esse</button>
+        </form>
+        
+        <form>
             <input 
                 type="text"
                 v-model="locaSaisie" 
                 @input = "autocomplete"
             >
-
         </form>
 
         <ul id="villes" v-if = "listeProp.length"> 

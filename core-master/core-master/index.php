@@ -96,5 +96,43 @@ Flight::route('/test', function (){
     Flight::render('test');
 });
 
+//route des boutons spé
+Flight::route('/boutonspeciaux', function () {
+    $link = Flight::get('link');
+
+    $saisie =  $_GET['filtre'];
+
+    $donnees = [];
+
+    if ($saisie != ''){ {
+        if ($saisie == "sainte"){
+        $results = mysqli_query (
+                $link,
+                    'SELECT nom, insee
+                    FROM geobase.communes
+                    WHERE nom LIKE "'.$saisie. '%"
+                    LIMIT 10'
+            );
+            foreach ($results as $result){
+                $donnees[] = $result;
+            };
+
+        } else if ($saisie == "esse") {
+                  $results = mysqli_query (
+                $link,
+                    'SELECT nom, insee
+                    FROM geobase.communes
+                    WHERE nom LIKE "%'.$saisie. '"
+                    LIMIT 10'
+            );
+            foreach ($results as $result){
+                $donnees[] = $result;
+            };
+        }
+    }};
+    Flight::json($donnees);
+});
+
+
 //CA FAIT TOUT MARCHER, LE SUPPRIME PAS
 Flight::start();
