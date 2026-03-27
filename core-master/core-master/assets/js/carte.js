@@ -30,16 +30,20 @@ Vue.createApp({
   methods : {
 
     autocomplete(){
-      console.log("Aucomplete a été lancé")
-      fetch(this.rechercheLocaConstruit)
-      .then ((result1)=>{
-        console.log(result1)
-        return result1.json()
-      })
-      .then((result2) => {
-        this.listeProp=result2;
-        console.log(result2)
-      })
+      if (this.methode == ''){
+        alert("Le traitement ne peux pas avoir lieu. Choisis une methode de recherche !")
+      } else {
+        console.log("Aucomplete a été lancé")
+        fetch(this.rechercheLocaConstruit)
+        .then ((result1)=>{
+          console.log(result1)
+          return result1.json()
+        })
+        .then((result2) => {
+          this.listeProp=result2;
+          console.log(result2)
+        })
+      }
     },
     
     geometrie(ville){
