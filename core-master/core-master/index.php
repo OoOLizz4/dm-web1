@@ -25,20 +25,47 @@ Flight::route('/rechercheLoca', function () {
 
     $saisie =  $_GET['locaSaisie'];
 
+    $methode =  $_GET['option'];
+
     $donnees = [];
 
     if ($saisie != ''){
+        if ($methode = "commence"){
+            $results = mysqli_query (
+                    $link,
+                        'SELECT nom, insee
+                        FROM geobase.communes
+                        WHERE nom LIKE "'.$saisie. '%"
+                        LIMIT 10'
+                );
+                foreach ($results as $result){
+                    $donnees[] = $result;
+                };
 
-        $results = mysqli_query (
+        } else if ($methode = "contient") {
+                    $results = mysqli_query (
                 $link,
                     'SELECT nom, insee
                     FROM geobase.communes
-                    WHERE nom LIKE "'.$saisie. '%"
+                    WHERE nom LIKE "%'.$saisie.'%"
                     LIMIT 10'
             );
             foreach ($results as $result){
                 $donnees[] = $result;
             };
+
+        } else if ($methode = "fini") {
+                    $results = mysqli_query (
+                $link,
+                    'SELECT nom, insee
+                    FROM geobase.communes
+                    WHERE nom LIKE "'.$saisie.'%"
+                    LIMIT 10'
+            );
+            foreach ($results as $result){
+                $donnees[] = $result;
+            };
+        };
     };
 
     Flight::json($donnees);

@@ -19,13 +19,21 @@
         <h1>(ノ・∀・)ノ C'est parti pour la géogarphie ! 」(￣▽￣」) </h1>
         <p>Cherche une ville que tu veux montrer sur la carte !</p>
         <form @submit.prevent="submit">
+
+            <select name="option">
+                <option value="commence"> commence par </option>
+                <option value="contient"> contient </option>
+                <option value="fini"> fini par </option>
+            </select>
+
             <input 
-                type="text" 
+                type="text"
                 v-model="locaSaisie" 
                 @input = "autocomplete"
             >
             <button>Go</button>
         </form>
+        <button> Commence par Saint </button> <button> Fini par esse </button>
 
         <ul id="villes" v-if = "listeProp.length"> 
             <li v-for = "ville in listeProp" @click = "geometrie(ville.insee)"> {{ville.nom}}-{{ville.insee}} </li>                 
