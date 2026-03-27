@@ -16,31 +16,39 @@
 
     <div id="entete">
 
-        <h1>(ノ・∀・)ノ Explorons les villes de France ! 」(￣▽￣」) </h1>
-        <p>Cherche une ville que tu veux montrer sur la carte !</p>
+        <div id="titre">
+            <h1>(ノ・∀・)ノ Explorons les villes de France ! 」(￣▽￣」)</h1>
+            <h2>Cherche une ville que tu veux montrer sur la carte !</h2>
+        </div>
         
-        <form>
-            <p>Choisis une méthode de recherche : </p>
-            <select name="methode" v-model="methode" @change="autocomplete">
-                <option value="commence"> commence par </option>
-                <option value="contient"> contient </option>
-                <option value="fini"> fini par </option>
-            </select>
+        <div id="form">
+            <form>
+                <p>Choisis une méthode de recherche : </p>
+                <select name="methode" v-model="methode" @change="autocomplete">
+                    <option value="commence"> commence par </option>
+                    <option value="contient"> contient </option>
+                    <option value="fini"> fini par </option>
+                </select>
 
-        </form>
+            </form>
 
-        <form action="/boutonspeciaux">
-            <button type="submit" name="filtre" value="sainte">Commence par Sainte</button>
-            <button type="submit" name="filtre" value="esse">Fini par esse</button>
-        </form>
-        
-        <form>
-            <input 
+            
+            <form>
+                <input 
                 type="text"
                 v-model="locaSaisie" 
                 @input = "autocomplete"
-            >
-        </form>
+                placeholder = "Expression à chercher"
+                >
+            </form>
+
+            <form action="/boutonspeciaux">
+                <p>Boutons de recherche prédéfinis : </p>
+                <button type="submit" name="filtre" value="sainte">Commence par Sainte</button>
+                <button type="submit" name="filtre" value="esse">Fini par esse</button>
+            </form>
+        </div>
+
 
         <ul id="villes" v-if = "listeProp.length"> 
             <li v-for = "ville in listeProp" @click = "geometrie(ville.insee)"> {{ville.nom}}-{{ville.insee}} </li>                 
@@ -60,6 +68,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="\assets\js\carte.js"></script>
+
+    <div id="foot">
+        <p> © Une création de Lisa Verrier </p> 
+    </div>
+
 
 </body>
 </html>
